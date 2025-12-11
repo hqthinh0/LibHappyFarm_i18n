@@ -2,7 +2,7 @@
   "button": {
     "login": "Login",
     "logout": "Logout",
-    "viewQuotes": "View Quotes...."
+    "viewQuotes": "View Quotes..."
   },
   "common": {
     "loading": "Loading...",
