@@ -5,6 +5,7 @@
     "viewQuotes": "lời nhắn"
   },
   "common": {
-    "loading": "đang tải..."
+    "loading": "đang tải...",
+    "loading02": "đang tải dữ liệu..."
   }
 }

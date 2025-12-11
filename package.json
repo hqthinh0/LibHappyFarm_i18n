@@ -6,6 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "release": "semantic-release",
+    "check:i18n": "node scripts/check-i18n.js",
+    "check:placeholders": "node scripts/check-placeholders.js",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/hqthinh0/LibHappyFarm_i18n.git"
   },
+  
   "keywords": [
     "i18n",
     "happyfarm",
@@ -26,9 +30,23 @@
   },
   "homepage": "https://github.com/hqthinh0/LibHappyFarm_i18n#readme",
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+     "ts-node": "^10.0.0",
+    "semantic-release": "^22.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/exec": "^6.0.0",
+    "@semantic-release/github": "^9.0.0",
+    "@semantic-release/npm": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0"
   },
-  "files": [
-    "dist"
-  ]
+    "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+  
 }

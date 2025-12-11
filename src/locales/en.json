@@ -5,6 +5,7 @@
     "viewQuotes": "View Quotes"
   },
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "loading02": "Loading..."
   }
 }

@@ -1,0 +1,116 @@
+name: Release (semantic-release)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  # id-token: write # nếu sau này cần provenance
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # semantic-release cần full history & tags
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # (optional) Cache npm
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install deps
+        run: npm ci
+
+      # semantic-release sẽ gọi scripts/ci-prepare.sh trong phase "prepare":
+      # 1) npm run build
+      # 2) npm run check:placeholders (nếu có)
+      # 3) npm test (nhưng bạn đã cho nó không làm fail)
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # để .npmrc của setup-node hoạt động
+          BASE_LOCALE: en
+          LOCALES: vi zh-CN zh-TW zh-HK
+          STRICT_EXTRA: "0"         # '1' nếu muốn fail khi locale có key thừa
+          ALLOW_MISSING_LOCALE: "0" # GIỮ FAIL khi thiếu key để bắt lỗi i18n
+        run: npm run release
+
+      # (tùy chọn) xuất version kể cả khi fail — hữu ích để debug, không ảnh hưởng vòng lặp
+      - name: Export released version to env
+        if: ${{ always() }}
+        run: |
+          node -e "console.log('RELEASE_VERSION=' + require('./package.json').version)" >> "$GITHUB_ENV"
+
+      # ✅ CHỈ tạo PR khi release thành công — ngăn spam PR khi check fail
+      - name: Create Release Sync PR
+        if: ${{ success() }}
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+          commit-message: "chore(release-sync): generated files (v${{ env.RELEASE_VERSION }})"
+          title: "chore(release-sync): generated files (v${{ env.RELEASE_VERSION }})"
+          body: "Auto-sync generated files (keys/changelog/version)."
+          branch: ci/release-sync
+          base: main
+          add-paths: |
+            CHANGELOG.md
+            package.json
+            package-lock.json
+            src/__generated__/keys.ts
+
+      # ✅ CHỈ auto-merge PR khi toàn job thành công
+      - name: Merge the PR (fallback via API)
+        if: ${{ success() && steps.cpr.outputs['pull-request-number'] }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = Number('${{ steps.cpr.outputs.pull-request-number }}');
+
+            const { data: info } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr,
+            });
+            core.info(`mergeable_state = ${info.mergeable_state}`);
+
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr,
+              merge_method: 'squash',
+            });
+            core.info(`Merged PR #${pr}`);
+
+            if (info.head && info.head.ref) {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${info.head.ref}`,
+              }).catch(() => core.warning('Cannot delete branch (maybe protected).'));
+            }
