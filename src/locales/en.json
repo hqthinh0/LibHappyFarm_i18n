@@ -7,7 +7,7 @@
   "common": {
     "loading": "Loading...",
     "logout": "Logout",
-    "logout02": "Logout",
+    "logout02": "Logout...",
     "loading02": "Loading {{name}}...."
   }
 }
