@@ -7,6 +7,7 @@
   "common": {
     "loading": "đang tải...",
      "logout": "đăng xuất",
+     "logout02": "đăng xuất",
     "loading02": "đang tải dữ liệu {{name}}...."
   }
 }
