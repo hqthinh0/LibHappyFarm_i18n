@@ -6,6 +6,6 @@
   },
   "common": {
     "loading": "đang tải...",
-    "loading02": "đang tải dữ liệu {{name}}..."
+    "loading02": "đang tải dữ liệu {{name}}...."
   }
 }

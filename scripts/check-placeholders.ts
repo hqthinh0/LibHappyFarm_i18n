@@ -29,7 +29,7 @@ function get(obj: Dict, dotted: string): unknown {
 
 // ---- Config & paths ----
 const root = process.cwd();
-const localesDir = path.join(root, "locales");
+const localesDir = path.join(root, "src", "locales");
 const BASE = (process.env.BASE_LOCALE || "en").trim();
 const basePath = path.join(localesDir, `${BASE}.json`);
 

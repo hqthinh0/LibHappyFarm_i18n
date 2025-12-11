@@ -6,6 +6,6 @@
   },
   "common": {
     "loading": "Loading...",
-    "loading02": "Loading {{name}}..."
+    "loading02": "Loading {{name}}...."
   }
 }

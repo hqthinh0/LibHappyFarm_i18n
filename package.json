@@ -8,7 +8,7 @@
     "build": "tsc",
     "release": "semantic-release",
     "check:i18n": "node scripts/check-i18n.js",
-    "check:placeholders": "node scripts/check-placeholders.js",
+    "check:placeholders": "ts-node scripts/check-placeholders.ts",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
