@@ -5,7 +5,7 @@
     "viewQuotes": "View Quotes.."
   },
   "common": {
-    "loading": "Loading...",
+    "loading": "Loading..",
     "logout": "Logout",
     "logout02": "Logout...",
     "loading02": "Loading {{name}}...."
