@@ -1,0 +1,6 @@
+ LOCALES: vi        # '1' nếu muốn thêm local key thì phải thêm vào đây nữa.  => thêm key vào đây nếu thêm ngôn ngữ.
+
+ thêm file ngôn ngữ vào Src....
+
+
+ export type LocaleCode = "en" | "vi"; => thêm key vào 

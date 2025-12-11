@@ -54,7 +54,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # để .npmrc của setup-node hoạt động
           BASE_LOCALE: en
-          LOCALES: vi zh-CN zh-TW zh-HK
+          LOCALES: vi        # '1' nếu muốn thêm local key thì phải thêm vào đây nữa.
           STRICT_EXTRA: "0"         # '1' nếu muốn fail khi locale có key thừa
           ALLOW_MISSING_LOCALE: "0" # GIỮ FAIL khi thiếu key để bắt lỗi i18n
         run: npm run release
