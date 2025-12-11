@@ -1,0 +1,34 @@
+{
+  "name": "happyfarm-i18n",
+  "version": "1.0.1",
+  "description": "Shared i18n package cho hệ thống web & mobile apps của dự án HappyFarm Game.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hqthinh0/LibHappyFarm_i18n.git"
+  },
+  "keywords": [
+    "i18n",
+    "happyfarm",
+    "localization",
+    "translation"
+  ],
+  "author": "Huynh Quoc Thinh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hqthinh0/LibHappyFarm_i18n/issues"
+  },
+  "homepage": "https://github.com/hqthinh0/LibHappyFarm_i18n#readme",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "files": [
+    "dist"
+  ]
+}

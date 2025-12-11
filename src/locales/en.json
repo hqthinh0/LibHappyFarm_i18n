@@ -1,0 +1,10 @@
+{
+  "button": {
+    "login": "Login",
+    "logout": "Logout",
+    "viewQuotes": "View Quotes"
+  },
+  "common": {
+    "loading": "Loading..."
+  }
+}

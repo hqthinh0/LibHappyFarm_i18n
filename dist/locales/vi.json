@@ -1,0 +1,10 @@
+{
+    "button": {
+        "login": "đăng nhập",
+        "logout": "đăng xuất",
+        "viewQuotes": "lời nhắn"
+    },
+    "common": {
+        "loading": "đang tải..."
+    }
+}

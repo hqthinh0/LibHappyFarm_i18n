@@ -34,7 +34,10 @@ npm install @happyfarm-i18n/i18n
 Trong **entry file** của app (ví dụ `main.tsx` với Reactjs, `App.tsx` với React Native):
 
 ```ts
-import { initI18n } from "@happyfarm-i18n/i18n";
+import { initI18n } from "@happyfarm-i18n/i18n"; 
+
+import { t, setDefaultLocale } from "happyfarm-i18n";
+
 
 // Khởi tạo với ngôn ngữ mặc định
 initI18n({ lng: "en" });
